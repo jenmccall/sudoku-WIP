@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Spectrum Sudoku</title>
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<script type="text/javascript" src="sudoku.js" defer></script>
+	</head>
+	<body>
+		<table id="sudoku-grid">
+			<tr>
+				<td id="header" colspan="9">
+					SUDOKU
+				</td>
+			</tr>
+			<tr id="row1">
+				<td class="grid-item section1 column1" id="firstBox" tabindex="0">x</td>
+	  			<td class="grid-item section1 column2" tabindex="1">x</td>
+	  			<td class="grid-item section1 column3" tabindex="2">x</td>
+	  			<td class="grid-item section2 column4" tabindex="3">x</td>
+	  			<td class="grid-item section2 column5" tabindex="4">x</td>
+	  			<td class="grid-item section2 column6" tabindex="5">x</td>
+	  			<td class="grid-item section3 column7" tabindex="6">x</td>
+	  			<td class="grid-item section3 column8" tabindex="7">x</td>
+	  			<td class="grid-item section3 column9" tabindex="8">x</td>
+			</tr>
+			<tr id="row2">
+	  			<td class="grid-item section1 column1" tabindex="9">x</td>
+	  			<td class="grid-item section1 column2" tabindex="10">x</td>
+	  			<td class="grid-item section1 column3" tabindex="11">x</td>
+	  			<td class="grid-item section2 column4" tabindex="12">x</td>
+	  			<td class="grid-item section2 column5" tabindex="13">x</td>
+	  			<td class="grid-item section2 column6" tabindex="14">x</td>
+	  			<td class="grid-item section3 column7" tabindex="15">x</td>
+	  			<td class="grid-item section3 column8" tabindex="16">x</td>
+	  			<td class="grid-item section3 column9" tabindex="17">x</td>
+			</tr>
+			<tr id="row3">
+	  			<td class="grid-item section1 column1" tabindex="18">x</td>
+	  			<td class="grid-item section1 column2" tabindex="19">x</td>
+	  			<td class="grid-item section1 column3" tabindex="20">x</td>
+	  			<td class="grid-item section2 column4" tabindex="21">x</td>
+	  			<td class="grid-item section2 column5" tabindex="22">x</td>
+	  			<td class="grid-item section2 column6" tabindex="23">x</td>
+	  			<td class="grid-item section3 column7" tabindex="24">x</td>
+	  			<td class="grid-item section3 column8" tabindex="25">x</td>
+	  			<td class="grid-item section3 column9" tabindex="26">x</td>
+			</tr>
+			<tr id="row4">
+				<td class="grid-item section4 column1" tabindex="27">x</td>
+	  			<td class="grid-item section4 column2" tabindex="28">x</td>
+	  			<td class="grid-item section4 column3" tabindex="29">x</td>
+	  			<td class="grid-item section5 column4" tabindex="30">x</td>
+	  			<td class="grid-item section5 column5" tabindex="31">x</td>
+	  			<td class="grid-item section5 column6" tabindex="32">x</td>
+	  			<td class="grid-item section6 column7" tabindex="33">x</td>
+	  			<td class="grid-item section6 column8" tabindex="34">x</td>
+	  			<td class="grid-item section6 column9" tabindex="35">x</td>
+			</tr>
+			<tr id="row5">
+	  			<td class="grid-item section4 column1" tabindex="36">x</td>
+	  			<td class="grid-item section4 column2" tabindex="37">x</td>
+	  			<td class="grid-item section4 column3" tabindex="38">x</td>
+	  			<td class="grid-item section5 column4" tabindex="39">x</td>
+	  			<td class="grid-item section5 column5" tabindex="40">x</td>
+	  			<td class="grid-item section5 column6" tabindex="41">x</td>
+	  			<td class="grid-item section6 column7" tabindex="42">x</td>
+	  			<td class="grid-item section6 column8" tabindex="43">x</td>
+	  			<td class="grid-item section6 column9" tabindex="44">x</td>
+			</tr>
+			<tr id="row6">
+	  			<td class="grid-item section4 column1" tabindex="45">x</td>
+	  			<td class="grid-item section4 column2" tabindex="46">x</td>
+	  			<td class="grid-item section4 column3" tabindex="47">x</td>
+	  			<td class="grid-item section5 column4" tabindex="48">x</td>
+	  			<td class="grid-item section5 column5" tabindex="49">x</td>
+	  			<td class="grid-item section5 column6" tabindex="50">x</td>
+	  			<td class="grid-item section6 column7" tabindex="51">x</td>
+	  			<td class="grid-item section6 column8" tabindex="52">x</td>
+	  			<td class="grid-item section6 column9" tabindex="53">x</td>
+			</tr>
+			<tr id="row7">
+				<td class="grid-item section7 column1" tabindex="54">x</td>
+	  			<td class="grid-item section7 column2" tabindex="55">x</td>
+	  			<td class="grid-item section7 column3" tabindex="56">x</td>
+	  			<td class="grid-item section8 column4" tabindex="57">x</td>
+	  			<td class="grid-item section8 column5" tabindex="58">x</td>
+	  			<td class="grid-item section8 column6" tabindex="59">x</td>
+	  			<td class="grid-item section9 column7" tabindex="60">x</td>
+	  			<td class="grid-item section9 column8" tabindex="61">x</td>
+	  			<td class="grid-item section9 column9" tabindex="62">x</td>
+			</tr>
+			<tr id="row8">
+	  			<td class="grid-item section7 column1" tabindex="63">x</td>
+	  			<td class="grid-item section7 column2" tabindex="64">x</td>
+	  			<td class="grid-item section7 column3" tabindex="65">x</td>
+	  			<td class="grid-item section8 column4" tabindex="66">x</td>
+	  			<td class="grid-item section8 column5" tabindex="67">x</td>
+	  			<td class="grid-item section8 column6" tabindex="68">x</td>
+	  			<td class="grid-item section9 column7" tabindex="69">x</td>
+	  			<td class="grid-item section9 column8" tabindex="70">x</td>
+	  			<td class="grid-item section9 column9" tabindex="71">x</td>
+			</tr>
+			<tr id="row9">
+	  			<td class="grid-item section7 column1" tabindex="72">x</td>
+	  			<td class="grid-item section7 column2" tabindex="73">x</td>
+	  			<td class="grid-item section7 column3" tabindex="74">x</td>
+	  			<td class="grid-item section8 column4" tabindex="75">x</td>
+	  			<td class="grid-item section8 column5" tabindex="76">x</td>
+	  			<td class="grid-item section8 column6" tabindex="77">x</td>
+	  			<td class="grid-item section9 column7" tabindex="78">x</td>
+	  			<td class="grid-item section9 column8" tabindex="79">x</td>
+	  			<td class="grid-item section9 column9" tabindex="80">x</td>
+			</tr>
+			<tr>
+				<td class="grid-item" id="checkMyAnswer" colspan="9" tabindex="81">
+					SOLVE
+				</td>
+				<!--
+				<td class="grid-item" id="reset" colspan="3" tabindex="82">
+					RESET
+				</td>
+				-->
+			</tr>
+		</table>
+	</body>
+</html>
