@@ -78,8 +78,6 @@ function solutionCheck() {
 
 
 function resetBoard() {
-	var cell;
-
 	for (var parse = 1; parse < 81; parse++) {
 		document.getElementsByTagName("td")[parse].textContent = "x";
 	}
