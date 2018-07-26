@@ -4,18 +4,54 @@ var current = document.activeElement;
 
 var bottomButton = document.getElementById("checkMyAnswer");
 
+var boardArray = [
+	[1, 2, 3, 4, 5, 6, 7, 8, 9],
+	[2, 3, 4, 5, 6, 7, 8, 9, 1],
+	[3, 4, 5, 6, 7, 8, 9, 1, 2],
+	[4, 5, 6, 7, 8, 9, 1, 2, 3],
+	[5, 6, 7, 8, 9, 1, 2, 3, 4],
+	[6, 7, 8, 9, 1, 2, 3, 4, 5],
+	[7, 8, 9, 1, 2, 3, 4, 5, 6],
+	[8, 9, 1, 2, 3, 4, 5, 6, 7],
+	[9, 1, 2, 3, 4, 5, 6, 7, 8]
+];
+
+function updateBoard() {
+	var row = Math.floor(place/9);
+	var cell = (place % 9);
+	var update = -1;
+	var board = document.getElementsByClassName("grid-item");
+
+	console.log(row, cell);
+
+	for (var rowNumber = 0; rowNumber < 9; rowNumber++) {
+		for (var cellParse = 0; cellParse < 9; cellParse++) {
+			update ++;
+			//console.log(board[parse].textContent);
+			board[update].textContent = boardArray[rowNumber][cellParse];
+		}
+	}
+		//board[parse].textContent = boardArray[rowNumber][cellParse];
+}
+
 window.onload = function firstFocus () {
+	updateBoard();
 	document.getElementById("firstBox").focus();
 }
 
 function keyPresses(event) {
 	var keyPressed = event.key;
 	var keyCode = event.keyCode;
+	var row = Math.floor(place/9);
+	var cell = (place % 9);
 
 	//Rules/logic of keypresses (place is associated with the tab index of each cell)
 	//Checks to see if the key pressed is an integer and not zero
 	if (isFinite(keyPressed) && keyCode !== 48 && place !== 81) {
-		event.currentTarget.textContent = keyPressed;
+		//event.currentTarget.textContent = keyPressed;
+		boardArray[row][cell] = keyPressed;
+
+		updateBoard();
 	}
 	//Checks to see if the key press is any one of the arrow keys and if the selection is along the edge of the grid
 	else if (keyCode === 39 && place !== 80 && place !== 82) {
@@ -78,7 +114,7 @@ function solutionCheck() {
 
 
 function resetBoard() {
-	for (var parse = 1; parse < 81; parse++) {
+	for (var parse = 1; parse < 82; parse++) {
 		document.getElementsByTagName("td")[parse].textContent = "x";
 	}
 }
