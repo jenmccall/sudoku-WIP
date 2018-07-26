@@ -26,12 +26,10 @@ function updateBoard() {
 
 	for (var rowNumber = 0; rowNumber < 9; rowNumber++) {
 		for (var cellParse = 0; cellParse < 9; cellParse++) {
-			update ++;
-			//console.log(board[parse].textContent);
+			update++;
 			board[update].textContent = boardArray[rowNumber][cellParse];
 		}
 	}
-		//board[parse].textContent = boardArray[rowNumber][cellParse];
 }
 
 window.onload = function firstFocus () {
@@ -114,9 +112,7 @@ function solutionCheck() {
 
 
 function resetBoard() {
-	for (var parse = 1; parse < 82; parse++) {
-		document.getElementsByTagName("td")[parse].textContent = "x";
-	}
+	updateBoard();
 }
 
 function fullBoard() {
