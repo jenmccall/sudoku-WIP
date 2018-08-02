@@ -4,37 +4,257 @@ var current = document.activeElement;
 
 var bottomButton = document.getElementById("checkMyAnswer");
 
-var boardArray = [
-	[1, 2, 3, 4, 5, 6, 7, 8, 9],
-	[2, 3, 4, 5, 6, 7, 8, 9, 1],
-	[3, 4, 5, 6, 7, 8, 9, 1, 2],
-	[4, 5, 6, 7, 8, 9, 1, 2, 3],
-	[5, 6, 7, 8, 9, 1, 2, 3, 4],
-	[6, 7, 8, 9, 1, 2, 3, 4, 5],
-	[7, 8, 9, 1, 2, 3, 4, 5, 6],
-	[8, 9, 1, 2, 3, 4, 5, 6, 7],
-	[9, 1, 2, 3, 4, 5, 6, 7, 8]
+//Below are the potential options for a starting board
+//each array of 9 objects represents a row on the board
+var boards = [
+	[
+		[
+			{value: null, section: 1, interactive: true}, {value: null, section: 1, interactive: true}, {value: null, section: 1, interactive: true}, 
+			{value: 2, section: 2, interactive: false}, {value: 6, section: 2, interactive: false}, {value: null, section: 2, interactive: true}, 
+			{value: 7, section: 3, interactive: false}, {value: null, section: 3, interactive: true}, {value: 1, section: 3, interactive: false}
+		],
+		[
+			{value: 6, section: 1, interactive: false}, {value: 8, section: 1, interactive: false}, {value: null, section: 1, interactive: true}, 
+			{value: null, section: 2, interactive: true}, {value: 7, section: 2, interactive: false}, {value: null, section: 2, interactive: true}, 
+			{value: null, section: 3, interactive: true}, {value: 9, section: 3, interactive: false}, {value: null, section: 3, interactive: true}
+		],
+		[
+			{value: 1, section: 1, interactive: false}, {value: 9, section: 1, interactive: false}, {value: null, section: 1, interactive: true}, 
+			{value: null, section: 2, interactive: true}, {value: null, section: 2, interactive: true}, {value: 4, section: 2, interactive: false}, 
+			{value: 5, section: 3, interactive: false}, {value: null, section: 3, interactive: true}, {value: null,  section: 3, interactive: true}
+		],
+		[
+			{value: 8, section: 4, interactive: false}, {value: 2, section: 4, interactive: false}, {value: null, section: 4, interactive: true}, 
+			{value: 1, section: 5, interactive: false}, {value: null, section: 5, interactive: true}, {value: null, section: 5, interactive: true}, 
+			{value: null, section: 6, interactive: true}, {value: 4, section: 6, interactive: false}, {value: null, section: 6, interactive: true}
+		],
+		[
+			{value: null, section: 4, interactive: true}, {value: null, section: 4, interactive: true}, {value: 4,  section: 4, interactive: false}, 
+			{value: 6, section: 5, interactive: false}, {value: null, section: 5, interactive: true}, {value: 2, section: 5, interactive: false}, 
+			{value: 9, section: 6, interactive: false}, {value: null, section: 6, interactive: true}, {value: null, section: 6, interactive: true}
+		],
+		[
+			{value: null, section: 4, interactive: true}, {value: 5, section: 4, interactive: false}, {value: null, section: 4, interactive: true}, 
+			{value: null, section: 5, interactive: true}, {value: null, section: 5, interactive: true}, {value: 3, section: 5, interactive: false}, 
+			{value: null, section: 6, interactive: true}, {value: 2, section: 6, interactive: false}, {value: 8, section: 6, interactive: false}
+		],
+		[
+			{value: null, section: 7, interactive: true}, {value: null, section: 7, interactive: true}, {value: 9, section: 7, interactive: false}, 
+			{value: 3, section: 8, interactive: false}, {value: null, section: 8, interactive: true}, {value: null, section: 8, interactive: true}, 
+			{value: null, section: 9, interactive: true}, {value: 7, section: 9, interactive: false}, {value: 4, section: 9, interactive: false}
+		],
+		[
+			{value: null, section: 7, interactive: true}, {value: 4, section: 7, interactive: false}, {value: null, section: 7, interactive: true}, 
+			{value: null, section: 8, interactive: true}, {value: 5, section: 8, interactive: false}, {value: null, section: 8, interactive: true}, 
+			{value: null, section: 9, interactive: true}, {value: 3, section: 9, interactive: false}, {value: 6, section: 9, interactive: false}
+		],
+		[
+			{value: 7, section: 7, interactive: false}, {value: null, section: 7, interactive: true}, {value: 3, section: 7, interactive: false}, 
+			{value: null, section: 8, interactive: true}, {value: 1, section: 8, interactive: false}, {value: 8, section: 8, interactive: false}, 
+			{value: null, section: 9, interactive: true}, {value: null, section: 9, interactive: true}, {value: null, section: 9, interactive: true}
+		]
+	],
+	[
+		[
+			{value: null, section: 1, interactive: true}, {value: null, section: 1, interactive: true}, {value: null, section: 1, interactive: true}, 
+			{value: 7, section: 2, interactive: false}, {value: 9, section: 2, interactive: false}, {value: null, section: 2, interactive: true}, 
+			{value: null, section: 3, interactive: true},{value: 5, section: 3, interactive: false}, {value: null, section: 3, interactive: true}
+		],
+		[
+			{value: 3, section: 1, interactive: false}, {value: 5, section: 1, interactive: false}, {value: 2, section: 1, interactive: false}, 
+			{value: null, section: 2, interactive: true}, {value: null, section: 2, interactive: true}, {value: 8, section: 3, interactive: false}, 
+			{value: null, section: 3, interactive: true}, {value: 4, section: 3, interactive: false}, {value: null, section: 3, interactive: true}
+		],
+		[
+			{value: null, section: 1, interactive: true}, {value: null, section: 1, interactive: true}, {value: null, section: 1, interactive: true}, 
+			{value: null, section: 2, interactive: true}, {value: null, section: 2, interactive: true}, {value: null, section: 2, interactive: true}, 
+			{value: null, section: 3, interactive: true}, {value: 8, section: 3, interactive: false}, {value: null, section: 3, interactive: true}
+		],
+		[
+			{value: null, section: 4, interactive: true}, {value: 1, section: 4, interactive: false}, {value: null, section: 4, interactive: true}, 
+			{value: null, section: 5, interactive: true}, {value: 7, section: 5, interactive: false}, {value: null, section: 5, interactive: true}, 
+			{value: null, section: 6, interactive: true}, {value: null, section: 6, interactive: true}, {value: 4, section: 6, interactive: false}
+		],
+		[
+			{value: 6, section: 4, interactive: false}, {value: null, section: 4, interactive: true}, {value: null, section: 4, interactive: true}, 
+			{value: 3, section: 5, interactive: false}, {value: null, section: 5, interactive: true}, {value: 1, section: 5, interactive: false}, 
+			{value: null, section: 6, interactive: true}, {value: null, section: 6, interactive: true}, {value: 8, section: 6, interactive: false}
+		],
+		[
+			{value: 9, section: 4, interactive: false}, {value: null, section: 4, interactive: true}, {value: null, section: 4, interactive: true}, 
+			{value: null, section: 5, interactive: true}, {value: 8, section: 5, interactive: false}, {value: null, section: 5, interactive: true}, 
+			{value: null, section: 6, interactive: true}, {value: 1, section: 6, interactive: false}, {value: null, section: 6, interactive: true}
+		],
+		[
+			{value: null, section: 7, interactive: true}, {value: 2, section: 7, interactive: false}, {value: null, section: 7, interactive: true}, 
+			{value: null, section: 8, interactive: true}, {value: null, section: 8, interactive: true}, {value: null, section: 8, interactive: true}, 
+			{value: null, section: 9, interactive: true}, {value: null, section: 9, interactive: true}, {value: null, section: 9, interactive: true}
+		],
+		[
+			{value: null, section: 7, interactive: true}, {value: 4, section: 7, interactive: false}, {value: null, section: 7, interactive: true}, 
+			{value: 5, section: 8, interactive: false}, {value: null, section: 8, interactive: true}, {value: null, section: 8, interactive: true}, 
+			{value: 8, section: 9, interactive: false}, {value: 7, section: 9, interactive: false}, {value: 1, section: 9, interactive: false}
+		],
+		[
+			{value: null, section: 7, interactive: true}, {value: 8, section: 7, interactive: false}, {value: null, section: 7, interactive: true}, 
+			{value: null, section: 8, interactive: true}, {value: 3, section: 8, interactive: false}, {value: 7, section: 8, interactive: false}, 
+			{value: null, section: 9, interactive: true}, {value: null, section: 9, interactive: true}, {value: null, section: 9, interactive: true}
+		]
+	],
+	//interactive test board
+	[
+		[
+			{value: null, section: 1, interactive: true}, {value: null, section: 1, interactive: true}, {value: null, section: 1, interactive: true}, 
+			{value: null, section: 2, interactive: true}, {value: 5, section: 2, interactive: false}, {value: null, section: 2, interactive: true}, 
+			{value: 9, section: 3, interactive: false}, {value: null, section: 3, interactive: true}, {value: 1, section: 3, interactive: false}
+		],
+		[
+			{value: 9, section: 1, interactive: false}, {value: null, section: 1, interactive: true}, {value: null, section: 1, interactive: true}, 
+			{value: 2, section: 2, interactive: false}, {value: null, section: 2, interactive: true}, {value: 1, section: 2, interactive: false}, 
+			{value: null, section: 3, interactive: true}, {value: null, section: 3, interactive: true}, {value: null, section: 3, interactive: true}
+		],
+		[
+			{value: 3, section: 1, interactive: false}, {value: null, section: 1, interactive: true}, {value: 8, section: 1, interactive: false}, 
+			{value: null, section: 2, interactive: true}, {value: null, section: 2, interactive: true}, {value: null, section: 2, interactive: true}, 
+			{value: 7, section: 3, interactive: false}, {value: null, section: 3, interactive: true}, {value: null, section: 3, interactive: true}
+		],
+		[
+			{value: null, section: 4, interactive: true}, {value: null, section: 4, interactive: true}, {value: null, section: 4, interactive: true}, 
+			{value: 3, section: 5, interactive: false}, {value: null, section: 5, interactive: true}, {value: null, section: 5, interactive: true}, 
+			{value: 6, section: 6, interactive: false}, {value: null, section: 6, interactive: true}, {value: 5, section: 6, interactive: false}
+		],
+		[
+			{value: null, section: 4, interactive: true}, {value: 5, section: 4, interactive: false}, {value: null, section: 4, interactive: true}, 
+			{value: null, section: 5, interactive: true}, {value: 4, section: 5, interactive: false}, {value: null, section: 5, interactive: true}, 
+			{value: null, section: 6, interactive: true}, {value: 2, section: 6, interactive: false}, {value: null, section: 6, interactive: true}
+		],
+		[
+			{value: 8, section: 4, interactive: false}, {value: null, section: 4, interactive: true}, {value: 4, section: 4, interactive: true}, 
+			{value: null, section: 5, interactive: true}, {value: null, section: 5, interactive: true}, {value: 7, section: 5, interactive: false}, 
+			{value: null, section: 6, interactive: true}, {value: null, section: 6, interactive: true}, {value: null, section: 6, interactive: true}
+		],
+		[
+			{value: null, section: 7, interactive: true}, {value: null, section: 7, interactive: true}, {value: 6, section: 7, interactive: false}, 
+			{value: null, section: 8, interactive: true}, {value: null, section: 8, interactive: true}, {value: null, section: 8, interactive: true}, 
+			{value: 5, section: 9, interactive: false}, {value: null, section: 9, interactive: true}, {value: 3, section: 9, interactive: false}
+		],
+		[
+			{value: null, section: 7, interactive: true}, {value: null, section: 7, interactive: true}, {value: null, section: 7, interactive: true}, 
+			{value: 9, section: 8, interactive: false}, {value: null, section: 8, interactive: true}, {value: 8, section: 8, interactive: false}, 
+			{value: null, section: 9, interactive: true}, {value: null, section: 9, interactive: true}, {value: 4, section: 9, interactive: false}
+		],
+		[
+			{value: 1, section: 7, interactive: false}, {value: null, section: 7, interactive: true}, {value: 4, section: 7, interactive: false}, 
+			{value: null, section: 8, interactive: true}, {value: 3, section: 8, interactive: false}, {value: null, section: 8, interactive: true}, 
+			{value: null, section: 9, interactive: true}, {value: null, section: 9, interactive: true}, {value: null, section: 9, interactive: true}
+		]
+	],
+	//column checker board
+	[
+		[null, 2, 3, 4, 5, 6, 7, 8, 9],
+		[null, 3, 4, 5, 6, 7, 8, 9, 1],
+		[3, 4, 5, 6, 7, 8, 9, 1, 2],
+		[4, 5, 6, 7, 8, 9, 1, 2, 3],
+		[5, 6, 7, 8, 9, 1, 2, 3, 4],
+		[6, 7, 8, 9, 1, 2, 3, 4, 5],
+		[7, 8, 9, 1, 2, 3, 4, 5, 6],
+		[8, 9, 1, 2, 3, 4, 5, 6, 7],
+		[9, 1, 2, 3, 4, 5, 6, 7, 8]
+	],
+	//section checker board
+	[
+		[{value: null, section: 1}, {value: 4, section: 1}, {value: 7, section: 1}, {value: 1, section: 2}, {value: 4, section: 2}, {value: 7, section: 2}, {value: 1, section: 3}, {value: 4, section: 3}, {value: 7, section: 3}],
+		[{value: null, section: 1}, {value: 5, section: 1}, {value: 8, section: 1}, {value: 2, section: 2}, {value: 5, section: 2}, {value: 8, section: 2}, {value: 2, section: 3}, {value: 5, section: 3}, {value: 8, section: 3}],
+		[{value: 3, section: 1}, {value: 6, section: 1}, {value: 9, section: 1}, {value: 3, section: 2}, {value: 6, section: 2}, {value: 9, section: 2}, {value: 3, section: 3}, {value: 6, section: 3}, {value: 9, section: 3}],
+		[{value: 4, section: 4}, {value: 7, section: 4}, {value: 1, section: 4}, {value: 4, section: 5}, {value: 7, section: 5}, {value: 1, section: 5}, {value: 4, section: 6}, {value: 7, section: 6}, {value: 1, section: 6}],
+		[{value: 5, section: 4}, {value: 8, section: 4}, {value: 2, section: 4}, {value: 5, section: 5}, {value: 8, section: 5}, {value: 2, section: 5}, {value: 5, section: 6}, {value: 8, section: 6}, {value: 2, section: 6}],
+		[{value: 6, section: 4}, {value: 9, section: 4}, {value: 3, section: 4}, {value: 6, section: 5}, {value: 9, section: 5}, {value: 3, section: 5}, {value: 6, section: 6}, {value: 9, section: 6}, {value: 3, section: 6}],
+		[{value: 7, section: 7}, {value: 1, section: 7}, {value: 4, section: 7}, {value: 7, section: 8}, {value: 1, section: 8}, {value: 4, section: 8}, {value: 7, section: 9}, {value: 1, section: 9}, {value: 4, section: 9}],
+		[{value: 8, section: 7}, {value: 2, section: 7}, {value: 6, section: 7}, {value: 8, section: 8}, {value: 2, section: 8}, {value: 5, section: 8}, {value: 9, section: 9}, {value: 2, section: 9}, {value: 5, section: 9}],
+		[{value: 9, section: 7}, {value: 3, section: 7}, {value: 5, section: 7}, {value: 9, section: 8}, {value: 3, section: 8}, {value: 6, section: 8}, {value: 8, section: 9}, {value: 3, section: 9}, {value: 6, section: 9}],
+	]
 ];
 
+var boardNumber =  0;//Math.floor(Math.random()*boards.length);
+var boardArray = boards[boardNumber];
+
+/*function sectionChecker() {
+	//this function will check to see if every section has all unique numbers. Then, it passes true/false to the solve function
+	var uniqueSection = true;
+	var checker;
+	var sectionArray = [];
+	var activeSection;
+	var checking;
+	var x = 0;
+
+	for (var row = 0; row <= 8; row++) {
+		for (var cellParse = 0; cellParse < 9; cellParse++) {
+			var object = boardArray[row][cellParse];
+
+			sectionArray()
+			console.log(object);
+		}
+
+		if (uniqueSection === false) {
+			break;
+		}
+	}
+	
+
+	/*This function works in the same way as the rowCheck function, using HTML classes to determine the active section (3x3 square)
+	//and then individually checking each cell in that section for duplicates using an array
+	for (var sectionNumber = 1; sectionNumber <= 9; sectionNumber++) {
+		activeSection = document.getElementsByClassName(`section${sectionNumber}`);
+
+		for (var cellParse = 0; cellParse < 9; cellParse++) {
+			sectionArray[cellParse] = activeSection[cellParse].textContent;
+		}
+		for (var i = 8; i >= 0; i--) {
+			checker = sectionArray[i];
+			sectionArray.pop();
+
+			if (sectionArray.includes(checker)) {
+				uniqueSection = false;
+			}
+		}
+
+		if (uniqueSection === false) {
+			break;
+		}
+	}
+	
+	return uniqueSection;
+}*/
+
 function updateBoard() {
-	var row = Math.floor(place/9);
-	var cell = (place % 9);
+	var rowPlace = Math.floor(place/9);
+	var cellPlace = (place % 9);
 	var update = -1;
 	var board = document.getElementsByClassName("grid-item");
 
-	console.log(row, cell);
+	console.log(rowPlace, cellPlace);
 
 	for (var rowNumber = 0; rowNumber < 9; rowNumber++) {
 		for (var cellParse = 0; cellParse < 9; cellParse++) {
 			update++;
-			board[update].textContent = boardArray[rowNumber][cellParse];
+			board[update].textContent = boardArray[rowNumber][cellParse].value;
+
+			for (var j = 0; j <= 81; j++) {
+			if (!boardArray[rowPlace][cellPlace].interactive) {
+				document.getElementsByTagName('td')[j].style.color = "white";
+			}
+		}
 		}
 	}
+
+		
 }
 
 window.onload = function firstFocus () {
 	updateBoard();
 	document.getElementById("firstBox").focus();
+
+	
 }
 
 function keyPresses(event) {
@@ -45,9 +265,8 @@ function keyPresses(event) {
 
 	//Rules/logic of keypresses (place is associated with the tab index of each cell)
 	//Checks to see if the key pressed is an integer and not zero
-	if (isFinite(keyPressed) && keyCode !== 48 && place !== 81) {
-		//event.currentTarget.textContent = keyPressed;
-		boardArray[row][cell] = keyPressed;
+	if (isFinite(keyPressed) && keyCode !== 48 && place !== 81 && boardArray[row][cell].interactive) {
+		boardArray[row][cell].value = keyPressed;
 
 		updateBoard();
 	}
@@ -98,9 +317,9 @@ function solutionCheck() {
 	console.log(`The board is full: ${fullBoard()}`);
 	console.log(`The rows are unique: ${rowChecker()}`);
 	console.log(`The columns are unique: ${columnChecker()}`);
-	console.log(`The sections are unique: ${sectionChecker()}`);
+	//console.log(`The sections are unique: ${sectionChecker()}`);
 
-	if (!fullBoard() || !rowChecker() || !columnChecker() || !sectionChecker()) {
+	if (!fullBoard() || !rowChecker() || !columnChecker() ){ //|| !sectionChecker()) {
 		bottomButton.textContent = "TRY AGAIN";
 	}
 	else {
@@ -112,27 +331,29 @@ function solutionCheck() {
 
 
 function resetBoard() {
+	
 	updateBoard();
 }
 
 function fullBoard() {
 	//this function will check to see if every square on the board is filled. Then, it passes true/false to the solve function
-	var complete = false;
+	var complete = true;
 	var checker;
 
-	//The board starts with "x"s filling each inactive cell, so if any of those remain, the board is incomplete and doesn't win
-	for (var parse = 0; parse < 81; parse++) {
-		checker = document.getElementsByTagName("td")[parse].textContent;
-		if (checker === "x") {
-			complete = false;
-		}
-		else {
-			complete = true;
-		}
-		if (complete === false) {
-			break;
+	//The board starts with null filling each inactive cell, so if any of those remain, the board is incomplete and doesn't win
+	for (var rowNumber = 0; rowNumber < 9; rowNumber++) {
+		for (var cellParse = 0; cellParse < 9; cellParse++) {
+			checker = boardArray[rowNumber][cellParse].value;
+			if (checker == null) {
+				complete = false;
+			}
+
+			if (complete === false) {
+				break;
+			}
 		}
 	}
+
 	return complete;
 }
 
@@ -144,13 +365,12 @@ function rowChecker() {
 	var activeRow
 
 	//This will scan through every row to check for duplicates
-	for (var rowNumber = 1; rowNumber <= 9; rowNumber++) {
-		//In index.HTML, we specify unique rows by ID. In order for the loop to progress, the active row uses this HTML ID.
-		activeRow = document.getElementById(`row${rowNumber}`);
+	for (var rowNumber = 0; rowNumber <= 8; rowNumber++) {
+		activeRow = boardArray[rowNumber];
 
-		//In any given row, this creates an array of all the numbers in said row
+		//In any given row, this creates an array of all the numbers in said row so we can manipulate/pop to check
 		for (var cellParse = 0; cellParse < 9; cellParse++) {
-			rowArray[cellParse] = activeRow.getElementsByTagName("td")[cellParse].textContent;
+			rowArray[cellParse] = activeRow[cellParse].value;
 		}
 		//by working 'backwards', we can store and pop the active number and check for duplicates in the array
 		for (var i = 8; i >= 0; i--) {
@@ -178,14 +398,11 @@ function columnChecker() {
 	var columnArray = [];
 	var activeColumn;
 
-	//This function works in the same way as the rowCheck function, using HTML classes to determine the active column
-	//and then individually checking each cell in that column for duplicates using an array
-	for (var columnNumber = 1; columnNumber <= 9; columnNumber++) {
-		activeColumn = document.getElementsByClassName(`column${columnNumber}`);
-
-		for (var cellParse = 0; cellParse < 9; cellParse++) {
-			columnArray[cellParse] = activeColumn[cellParse].textContent;
+	for (var columnPlace = 0; columnPlace <= 8; columnPlace++) {
+		for (activeColumn = 0; activeColumn <= 8; activeColumn++){
+			columnArray[activeColumn] = boardArray[activeColumn][columnPlace].value;
 		}
+
 		for (var i = 8; i >= 0; i--) {
 			checker = columnArray[i];
 			columnArray.pop();
@@ -199,39 +416,11 @@ function columnChecker() {
 			break;
 		}
 	}
+
 	return uniqueColumn;
 }
 
-function sectionChecker() {
-	//this function will check to see if every section has all unique numbers. Then, it passes true/false to the solve function
-	var uniqueSection = true;
-	var checker;
-	var sectionArray = [];
-	var activeSection;
 
-	//This function works in the same way as the rowCheck function, using HTML classes to determine the active section (3x3 square)
-	//and then individually checking each cell in that section for duplicates using an array
-	for (var sectionNumber = 1; sectionNumber <= 9; sectionNumber++) {
-		activeSection = document.getElementsByClassName(`section${sectionNumber}`);
-
-		for (var cellParse = 0; cellParse < 9; cellParse++) {
-			sectionArray[cellParse] = activeSection[cellParse].textContent;
-		}
-		for (var i = 8; i >= 0; i--) {
-			checker = sectionArray[i];
-			sectionArray.pop();
-
-			if (sectionArray.includes(checker)) {
-				uniqueSection = false;
-			}
-		}
-
-		if (uniqueSection === false) {
-			break;
-		}
-	}
-	return uniqueSection;
-}
 
 for (var i = 0; i < boxes.length; i++) {
 	boxes[i].addEventListener('keydown', keyPresses);
