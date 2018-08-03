@@ -17,21 +17,26 @@ body {
 	min-width: 10px;
 }
 
+.noninteractive {
+	color: #EF6461;
+	font-weight: bold;
+}
+
 th {
 	padding: 10px;
 }
 
 td:nth-child(3) {
-	border-right: 3px solid;
+	border-right: 3px solid #FFFFC7;
 }
 td:nth-child(6) {
-	border-right: 3px solid;
+	border-right: 3px solid #FFFFC7;
 }
 tr:nth-child(4) td {
-	border-bottom: 3px solid;
+	border-bottom: 3px solid #FFFFC7;
 }
 tr:nth-child(7) td {
-	border-bottom: 3px solid;
+	border-bottom: 3px solid #FFFFC7;
 }
 
 .grid-item {

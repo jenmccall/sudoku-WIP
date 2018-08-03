@@ -150,7 +150,7 @@ var boards = [
 		]
 	],
 	//column checker board
-	[
+	/*[
 		[null, 2, 3, 4, 5, 6, 7, 8, 9],
 		[null, 3, 4, 5, 6, 7, 8, 9, 1],
 		[3, 4, 5, 6, 7, 8, 9, 1, 2],
@@ -172,43 +172,45 @@ var boards = [
 		[{value: 7, section: 7}, {value: 1, section: 7}, {value: 4, section: 7}, {value: 7, section: 8}, {value: 1, section: 8}, {value: 4, section: 8}, {value: 7, section: 9}, {value: 1, section: 9}, {value: 4, section: 9}],
 		[{value: 8, section: 7}, {value: 2, section: 7}, {value: 6, section: 7}, {value: 8, section: 8}, {value: 2, section: 8}, {value: 5, section: 8}, {value: 9, section: 9}, {value: 2, section: 9}, {value: 5, section: 9}],
 		[{value: 9, section: 7}, {value: 3, section: 7}, {value: 5, section: 7}, {value: 9, section: 8}, {value: 3, section: 8}, {value: 6, section: 8}, {value: 8, section: 9}, {value: 3, section: 9}, {value: 6, section: 9}],
-	]
+	]*/
 ];
 
 var boardNumber =  0;//Math.floor(Math.random()*boards.length);
 var boardArray = boards[boardNumber];
 
-/*function sectionChecker() {
+function sectionChecker() {
+
 	//this function will check to see if every section has all unique numbers. Then, it passes true/false to the solve function
-	var uniqueSection = true;
-	var checker;
-	var sectionArray = [];
-	var activeSection;
-	var checking;
-	var x = 0;
-
-	for (var row = 0; row <= 8; row++) {
-		for (var cellParse = 0; cellParse < 9; cellParse++) {
-			var object = boardArray[row][cellParse];
-
-			sectionArray()
-			console.log(object);
-		}
-
-		if (uniqueSection === false) {
-			break;
+	for (var count = 1; count < 10; count++) {
+		if (!oneSection(count)) {
+			return false;
 		}
 	}
-	
 
-	/*This function works in the same way as the rowCheck function, using HTML classes to determine the active section (3x3 square)
-	//and then individually checking each cell in that section for duplicates using an array
-	for (var sectionNumber = 1; sectionNumber <= 9; sectionNumber++) {
-		activeSection = document.getElementsByClassName(`section${sectionNumber}`);
+	return true;
+}
 
-		for (var cellParse = 0; cellParse < 9; cellParse++) {
-			sectionArray[cellParse] = activeSection[cellParse].textContent;
+function oneSection(sectionNumber) {
+	var checker;
+	var sectionArray = [];
+	var uniqueSection = true;
+
+	for (var row = 0; row <= 8; row++) {
+			for (var cellParse = 0; cellParse < 9; cellParse++) {
+				var object = boardArray[row][cellParse];
+				
+				if (object.section === sectionNumber) {
+					//console.log(object.value);
+
+					sectionArray.push(object.value);
+				}
+			}
+
+			if (uniqueSection === false) {
+				break;
+			}
 		}
+
 		for (var i = 8; i >= 0; i--) {
 			checker = sectionArray[i];
 			sectionArray.pop();
@@ -217,14 +219,8 @@ var boardArray = boards[boardNumber];
 				uniqueSection = false;
 			}
 		}
-
-		if (uniqueSection === false) {
-			break;
-		}
-	}
-	
 	return uniqueSection;
-}*/
+}
 
 function updateBoard() {
 	var rowPlace = Math.floor(place/9);
@@ -239,11 +235,8 @@ function updateBoard() {
 			update++;
 			board[update].textContent = boardArray[rowNumber][cellParse].value;
 
-			for (var j = 0; j <= 81; j++) {
-			if (!boardArray[rowPlace][cellPlace].interactive) {
-				document.getElementsByTagName('td')[j].style.color = "white";
-			}
-		}
+			if (boardArray[rowNumber][cellParse].interactive === false)
+				document.querySelector(`#row${rowNumber + 1} .column${cellParse + 1}`).classList.add('noninteractive');
 		}
 	}
 
@@ -317,9 +310,9 @@ function solutionCheck() {
 	console.log(`The board is full: ${fullBoard()}`);
 	console.log(`The rows are unique: ${rowChecker()}`);
 	console.log(`The columns are unique: ${columnChecker()}`);
-	//console.log(`The sections are unique: ${sectionChecker()}`);
+	console.log(`The sections are unique: ${sectionChecker()}`);
 
-	if (!fullBoard() || !rowChecker() || !columnChecker() ){ //|| !sectionChecker()) {
+	if (!fullBoard() || !rowChecker() || !columnChecker() || !sectionChecker()) {
 		bottomButton.textContent = "TRY AGAIN";
 	}
 	else {
@@ -331,7 +324,13 @@ function solutionCheck() {
 
 
 function resetBoard() {
-	
+	for (var rowNumber = 0; rowNumber < 9; rowNumber++) {
+		for (var cellParse = 0; cellParse < 9; cellParse++) {
+			if (boardArray[rowNumber][cellParse].interactive)
+				boardArray[rowNumber][cellParse].value = null;
+		}
+	}
+
 	updateBoard();
 }
 
